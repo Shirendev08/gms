@@ -12,6 +12,7 @@ function App() {
   const [meanings, setMeanings] = useState([]);
   const [category, setCategory] = useState("en");
   const [LightTheme, setLightTheme] = useState(false);
+  
   const dictionaryApi = async () => {
     try {
       const data = await axios.get(
@@ -23,7 +24,7 @@ function App() {
     }
   };
 
-  console.log(meanings);
+  
 
   useEffect(() => {
     dictionaryApi();
@@ -66,6 +67,7 @@ function App() {
     checked: {},
     track: {},
   })(Switch);
+  
 
   return (
     <div
@@ -95,7 +97,7 @@ function App() {
           LightTheme={LightTheme}>
       <span className="title">{word ? word : "Word Hunt"}</span>
       <div className="inputs">
-      <ThemeProvider>
+      <ThemeProvider theme={darkTheme}>
           <TextField
             className="search"
             id="filled-basic"
