@@ -10,20 +10,16 @@ import axios from "axios";
 function App() {
   const [word, setWord] = useState("");
   const [meanings, setMeanings] = useState([]);
-  
   const [LightTheme, setLightTheme] = useState(false);
   const [message, setMessage] = useState('');
-  const [meaning1, setMeaning1] = useState('');
+  
+  const [ug, setUg] = useState('');
 
-  const handleChange = event => {
-    setMessage(event.target.value);
-
-    console.log('value is:', event.target.value);
-  };
 
   const translate = () => {
-    const message = document.getElementById("1").innerHTML
-    const encodedParams = new URLSearchParams();
+  
+
+  const encodedParams = new URLSearchParams();
 encodedParams.append("q", message);
 encodedParams.append("target", "mn");
 encodedParams.append("source", "en");
@@ -33,35 +29,43 @@ const options = {
 	headers: {
 		'content-type': 'application/x-www-form-urlencoded',
 		'Accept-Encoding': 'application/gzip',
-		'X-RapidAPI-Key': '3d5303f556mshd5174afd5e39203p154cd8jsnd20188b00a57',
+		'X-RapidAPI-Key': 'b823934181mshc65114803b831f8p1d84d5jsn8a7cfc272ad9',
 		'X-RapidAPI-Host': 'google-translate1.p.rapidapi.com'
 	},
 	body: encodedParams
 };
 
 fetch('https://google-translate1.p.rapidapi.com/language/translate/v2', options)
-      .then(response => response.json())
-      .then(response => setMeaning1(response.data.translations[0].translatedText))
-      .catch(err => console.error(err));
+	.then(response => response.json())
+	.then(async (response) => { setUg(response.data.translations[0].translatedText)})
+	.catch(err => console.error(err));
+    
 
-  }
+}
+
   
   const dictionaryApi = async () => {
     try {
       const data = await axios.get(
         `https://api.dictionaryapi.dev/api/v2/entries/en/${word}`
-      );console.log(data.data[0].meanings[0].definitions)
-      setMeanings(data.data);
+      );setMessage(data.data[0].meanings[0].definitions[0].definition)
+      
     } catch (error) {
       console.log(error);
     }
   };
+  
 
   
 
   useEffect(() => {
-    dictionaryApi();
+    {word && dictionaryApi();}
   }, [word]);
+
+
+
+
+
  
   const darkTheme = createMuiTheme({
     palette: {
@@ -71,12 +75,14 @@ fetch('https://google-translate1.p.rapidapi.com/language/translate/v2', options)
       type: LightTheme ? "light" : "dark",
     },
   });
-
-
     const handleText = debounce((text) => {
     setWord(text);
   }, 500);
   
+
+
+
+
 
   const PurpleSwitch = withStyles({
     switchBase: {
@@ -91,7 +97,9 @@ fetch('https://google-translate1.p.rapidapi.com/language/translate/v2', options)
     checked: {},
     track: {},
   })(Switch);
-  console.log(document.getElementById("1"))
+ 
+ 
+
   
 
   return (
@@ -127,7 +135,7 @@ fetch('https://google-translate1.p.rapidapi.com/language/translate/v2', options)
             // value={word}
             label="Search a Word"
             onChange={(e) => handleText(e.target.value)}
-            onInput={handleChange}
+          
           />
           <TextField>
           
@@ -139,33 +147,47 @@ fetch('https://google-translate1.p.rapidapi.com/language/translate/v2', options)
             word={word}
             LightTheme={LightTheme}
            >
-    <button onClick={translate}>click</button>
+    {/* <button onClick={translate}>click</button> */}
 
     {word === "" ? (
         <span className="subTitle">Start by typing a word in search</span>
       ) : (
-        meanings.map((mean) =>
-          mean.meanings.map((item) =>
-            item.definitions.map((def) => (
-              <div
+        // meanings.map((mean) =>
+        //   mean.meanings.map((item) =>
+        //     item.definitions.map((def) => (
+        //       <div
+        //         className="singleMean"
+        //         style={{
+        //           backgroundColor: LightTheme ? "#3b5360" : "white",
+        //           color: LightTheme ? "white" : "black",
+        //         }}
+        //       >
+        //         <b>  <ul> {def.definition}  </ul></b> <ul><p>{ug}</p></ul>
+        //         <hr style={{ backgroundColor: "black", width: "100%" }} />
+        //         {def.example && (
+        //           <span>
+        //             <ul> <b>Example :</b> {def.example}</ul>
+        //           </span>
+        //         )}
+               
+        //       </div>
+
+            
+          <div
                 className="singleMean"
                 style={{
                   backgroundColor: LightTheme ? "#3b5360" : "white",
                   color: LightTheme ? "white" : "black",
                 }}
               >
-                <b>  <ul id="1"> {def.definition}  </ul></b> <p>{meaning1}</p>
+                <b>  <ul> {message}  </ul></b> <ul><p>{ug}</p></ul>
                 <hr style={{ backgroundColor: "black", width: "100%" }} />
-                {def.example && (
+                
                   <span>
-                    <ul> <b>Example :</b> {def.example}</ul>
+                    <ul> <b>Example :</b> {message}</ul>
                   </span>
-                )}
-               
               </div>
-            ))
-          )
-        )
+        
       )}
                
               
