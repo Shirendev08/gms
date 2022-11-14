@@ -12,22 +12,22 @@ const App = () => {
 
   const translate = () => {
     const encodedParams = new URLSearchParams();
-    encodedParams.append("q", message);
-    encodedParams.append("target", "mn");
-    encodedParams.append("source", "en");
-    
-    const translateApiOptions = {
-      method: 'POST',
-      headers: {
-        'content-type': 'application/x-www-form-urlencoded',
-        'Accept-Encoding': 'application/gzip',
-        'X-RapidAPI-Key': 'e1b75410aemsh25be6f5e579bb8ap15bdacjsn098f8f344007',
-        'X-RapidAPI-Host': 'google-translate1.p.rapidapi.com'
-      },
-      body: encodedParams
-    };
-    
-    return fetch('https://google-translate1.p.rapidapi.com/language/translate/v2', translateApiOptions)
+encodedParams.append("q", message);
+encodedParams.append("target", "mn");
+encodedParams.append("source", "en");
+
+const options = {
+	method: 'POST',
+	headers: {
+		'content-type': 'application/x-www-form-urlencoded',
+		'Accept-Encoding': 'application/gzip',
+		'X-RapidAPI-Key': '3d5303f556mshd5174afd5e39203p154cd8jsnd20188b00a57',
+		'X-RapidAPI-Host': 'google-translate1.p.rapidapi.com'
+	},
+	body: encodedParams
+};
+
+fetch('https://google-translate1.p.rapidapi.com/language/translate/v2', options)
       .then(response => response.json())
       .then(response => setMeaning(response.data.translations[0].translatedText))
       .catch(err => console.error(err));

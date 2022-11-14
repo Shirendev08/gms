@@ -17,7 +17,7 @@ function App() {
     try {
       const data = await axios.get(
         `https://api.dictionaryapi.dev/api/v2/entries/${category}/${word}`
-      );
+      );console.log(data.data[0].meanings[0].definitions)
       setMeanings(data.data);
     } catch (error) {
       console.log(error);
