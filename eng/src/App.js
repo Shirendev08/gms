@@ -137,9 +137,7 @@ fetch('https://google-translate1.p.rapidapi.com/language/translate/v2', options)
             onChange={(e) => handleText(e.target.value)}
           
           />
-          <TextField>
-          
-          </TextField>
+       
         </ThemeProvider>
       </div>
     </div>
@@ -180,7 +178,8 @@ fetch('https://google-translate1.p.rapidapi.com/language/translate/v2', options)
                   color: LightTheme ? "white" : "black",
                 }}
               >
-                <b>  <ul> {message}  </ul></b> <ul><p>{ug}</p></ul>
+                <b>  <ul> {message}  </ul></b> 
+                {/* <ul><p>{ug}</p></ul> */}
                 <hr style={{ backgroundColor: "black", width: "100%" }} />
                 
                   <span>
