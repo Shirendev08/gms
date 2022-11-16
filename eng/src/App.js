@@ -8,51 +8,53 @@ import axios from "axios";
 
 
 function App() {
+  const too=[0,1,2,3,4,5,6,7,8,9]
   const [word, setWord] = useState("");
   const [meanings, setMeanings] = useState([]);
   const [LightTheme, setLightTheme] = useState(false);
   const [message, setMessage] = useState('');
+  const [def1, setDef1] = useState('')
   
   const [ug, setUg] = useState('');
 
 
   const translate = () => {
-  
-
-  const encodedParams = new URLSearchParams();
-encodedParams.append("q", message);
-encodedParams.append("target", "mn");
-encodedParams.append("source", "en");
+    const encodedParams = new URLSearchParams();
+encodedParams.append("from", "en");
+encodedParams.append("to", "mn");
+encodedParams.append("text", "hello");
 
 const options = {
 	method: 'POST',
 	headers: {
 		'content-type': 'application/x-www-form-urlencoded',
-		'Accept-Encoding': 'application/gzip',
-		'X-RapidAPI-Key': 'b823934181mshc65114803b831f8p1d84d5jsn8a7cfc272ad9',
-		'X-RapidAPI-Host': 'google-translate1.p.rapidapi.com'
+		'X-RapidAPI-Key': 'c0a2d3b7a8mshe348abd873a4e4ep17385djsn44c42053c9a5',
+		'X-RapidAPI-Host': 'translo.p.rapidapi.com'
 	},
 	body: encodedParams
 };
 
-fetch('https://google-translate1.p.rapidapi.com/language/translate/v2', options)
+fetch('https://translo.p.rapidapi.com/api/v3/translate', options)
 	.then(response => response.json())
-	.then(async (response) => { setUg(response.data.translations[0].translatedText)})
+	.then(response => setMessage(response.translated_text))
 	.catch(err => console.error(err));
-    
 
 }
 
   
   const dictionaryApi = async () => {
-    try {
-      const data = await axios.get(
-        `https://api.dictionaryapi.dev/api/v2/entries/en/${word}`
-      );setMessage(data.data[0].meanings[0].definitions[0].definition)
-      
-    } catch (error) {
-      console.log(error);
-    }
+    const options = {
+      method: 'GET',
+      headers: {
+        'X-RapidAPI-Key': 'c0a2d3b7a8mshe348abd873a4e4ep17385djsn44c42053c9a5',
+        'X-RapidAPI-Host': 'mashape-community-urban-dictionary.p.rapidapi.com'
+      }
+    };
+    
+    fetch(`https://mashape-community-urban-dictionary.p.rapidapi.com/define?term=${word}`, options)
+      .then(response => response.json())
+      .then(response => setDef1(response.list))
+      .catch(err => console.error(err));
   };
   
 
@@ -61,6 +63,9 @@ fetch('https://google-translate1.p.rapidapi.com/language/translate/v2', options)
   useEffect(() => {
     {word && dictionaryApi();}
   }, [word]);
+  def1.map(x => {console.log(x.definition)})
+// console.log(def1)
+
 
 
 
@@ -97,6 +102,7 @@ fetch('https://google-translate1.p.rapidapi.com/language/translate/v2', options)
     checked: {},
     track: {},
   })(Switch);
+  
  
  
 
@@ -145,55 +151,40 @@ fetch('https://google-translate1.p.rapidapi.com/language/translate/v2', options)
             word={word}
             LightTheme={LightTheme}
            >
-    {/* <button onClick={translate}>click</button> */}
+    <button onClick={translate}>click</button>
 
     {word === "" ? (
         <span className="subTitle">Start by typing a word in search</span>
-      ) : (
-        // meanings.map((mean) =>
-        //   mean.meanings.map((item) =>
-        //     item.definitions.map((def) => (
-        //       <div
-        //         className="singleMean"
-        //         style={{
-        //           backgroundColor: LightTheme ? "#3b5360" : "white",
-        //           color: LightTheme ? "white" : "black",
-        //         }}
-        //       >
-        //         <b>  <ul> {def.definition}  </ul></b> <ul><p>{ug}</p></ul>
-        //         <hr style={{ backgroundColor: "black", width: "100%" }} />
-        //         {def.example && (
-        //           <span>
-        //             <ul> <b>Example :</b> {def.example}</ul>
-        //           </span>
-        //         )}
-               
-        //       </div>
-
-            
+      ) : ( 
+      // def1.map(x => {
           <div
-                className="singleMean"
-                style={{
-                  backgroundColor: LightTheme ? "#3b5360" : "white",
-                  color: LightTheme ? "white" : "black",
-                }}
-              >
-                <b>  <ul> {message}  </ul></b> 
-                {/* <ul><p>{ug}</p></ul> */}
-                <hr style={{ backgroundColor: "black", width: "100%" }} />
-                
-                  <span>
-                    <ul> <b>Example :</b> {message}</ul>
-                  </span>
-              </div>
+            className="singleMean"
+            style={{
+              backgroundColor: LightTheme ? "#3b5360" : "white",
+              color: LightTheme ? "white" : "black",
+            }}
+          >
+            <b>123</b>
+            <hr style={{ backgroundColor: "black", width: "100%" }} />
+            
+              <span>
+                <b>Example :</b> 
+              </span>
+            
+          
+          </div>
         
-      )}
-               
-              
       
+      )}
     </div>
     </div>
   );
 }
 
+
 export default App;
+
+
+// https://rapidapi.com/armangokka/api/translo
+// https://rapidapi.com/zakutynsky/api/YandexTranslate/
+// https://translate.yandex.com/?source_lang=en&target_lang=mn&text=Hypertext%20Transfer%20Protocol%20Secure%20(https)%20is%20a%20combination%20of%20the%20Hypertext%20Transfer%20Protocol%20(HTTP)%20with%20the%20Secure%20Socket%20Layer%20(SSL)%2FTransport%20Layer%20Security%20(TLS)%20protocol.%20TLS%20is%20an%20authentication%20and%20security%20protocol%20widely%20implemented%20in%20browsers%20and%20Web%20servers
