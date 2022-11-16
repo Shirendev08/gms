@@ -22,7 +22,7 @@ function App() {
     const encodedParams = new URLSearchParams();
 encodedParams.append("from", "en");
 encodedParams.append("to", "mn");
-encodedParams.append("text", "hello");
+encodedParams.append("text", def1[0].definition);
 
 const options = {
 	method: 'POST',
@@ -65,6 +65,7 @@ fetch('https://translo.p.rapidapi.com/api/v3/translate', options)
   }, [word]);
   def1.map(x => {console.log(x.definition)})
 // console.log(def1)
+console.log(message)
 
 
 
