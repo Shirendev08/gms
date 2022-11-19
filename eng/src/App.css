@@ -32,6 +32,10 @@
 .search {
   width: 43%;
 }
+button{
+  width: 43%;
+  align-self: center;
+}
 
 .select {
   width: 43%;
@@ -67,4 +71,3 @@
   padding: 10px 20px;
   margin: 10px 0;
 }
-

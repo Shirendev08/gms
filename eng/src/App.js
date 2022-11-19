@@ -12,16 +12,17 @@ function App() {
   const [meanings, setMeanings] = useState([]);
   const [LightTheme, setLightTheme] = useState(false);
   const [message, setMessage] = useState('');
-  const [def1, setDef1] = useState('')
+  const [def1, setDef1] = useState([])
   
   const [ug, setUg] = useState('');
 
 
-  const translate = () => {
+  const translate = async () => {
     const encodedParams = new URLSearchParams();
+    
 encodedParams.append("from", "en");
 encodedParams.append("to", "mn");
-encodedParams.append("text", def1[0].definition);
+encodedParams.append("text", def1);
 
 const options = {
 	method: 'POST',
@@ -52,7 +53,7 @@ fetch('https://translo.p.rapidapi.com/api/v3/translate', options)
     
     fetch(`https://mashape-community-urban-dictionary.p.rapidapi.com/define?term=${word}`, options)
       .then(response => response.json())
-      .then(response => setDef1(response.list))
+      .then(response => setDef1(response.list[1].definition))
       .catch(err => console.error(err));
   };
   
@@ -62,10 +63,14 @@ fetch('https://translo.p.rapidapi.com/api/v3/translate', options)
   useEffect(() => {
     {word && dictionaryApi();}
   },[word]);
+  useEffect(() => {
+    {def1 && translate();}
+  },[def1]);
 
 
   // def1.map(x => {console.log(x.definition)})
 console.log(def1)
+
 // console.log(message)
 
 
@@ -171,12 +176,12 @@ console.log(def1)
             word={word}
             LightTheme={LightTheme}
            >
-    {/* <button onClick={translate}>click</button> */}
+    <button onClick={translate}>Монгол тодорхойлолт харах</button>
 
     {word === "" ? (
         <span className="subTitle">Start by typing a word in search</span>
       ) : ( 
-      // def1.map(x => {
+    
           <div
             className="singleMean"
             style={{
@@ -184,11 +189,11 @@ console.log(def1)
               color: LightTheme ? "white" : "black",
             }}
           >
-            <b>123</b>
+           <b>English :</b> {def1}
             <hr style={{ backgroundColor: "black", width: "100%" }} />
             
               <span>
-                <b>Example :</b> 
+                <b>Монгол :</b>  {message}
               </span>
             
           
