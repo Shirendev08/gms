@@ -176,7 +176,7 @@ console.log(def1)
             word={word}
             LightTheme={LightTheme}
            >
-    <button onClick={translate}>Монгол тодорхойлолт харах</button>
+    {/* <button onClick={translate}>Монгол тодорхойлолт харах</button> */}
 
     {word === "" ? (
         <span className="subTitle">Start by typing a word in search</span>
