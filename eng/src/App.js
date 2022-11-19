@@ -8,7 +8,6 @@ import axios from "axios";
 
 
 function App() {
-  const too=[0,1,2,3,4,5,6,7,8,9]
   const [word, setWord] = useState("");
   const [meanings, setMeanings] = useState([]);
   const [LightTheme, setLightTheme] = useState(false);
@@ -62,10 +61,30 @@ fetch('https://translo.p.rapidapi.com/api/v3/translate', options)
 
   useEffect(() => {
     {word && dictionaryApi();}
-  }, [word]);
-  def1.map(x => {console.log(x.definition)})
-// console.log(def1)
-console.log(message)
+  },[word]);
+
+
+  // def1.map(x => {console.log(x.definition)})
+console.log(def1)
+// console.log(message)
+
+
+// var arr = [];
+// var z=[]
+// for (var key in def1) {
+//     if (def1.hasOwnProperty(key)) {
+//         arr.push( [ key, def1[key] ] );
+//     }
+// }
+// for (var key in arr) {
+//   if (arr.hasOwnProperty(key)) {
+//       z.push( [ key, arr[key] ] );
+//   }
+// }
+// console.log(z[0][1][1].definition)
+
+
+
 
 
 
@@ -115,7 +134,7 @@ console.log(message)
       style={{
         height: "100vh",
         backgroundColor: LightTheme ? "#fff" : "#282c34",
-        color: LightTheme ? "black" : "white",
+        color: LightTheme ? "#444444" : "white",
         transition: "all 0.5s linear",
       }}
     >
@@ -152,7 +171,7 @@ console.log(message)
             word={word}
             LightTheme={LightTheme}
            >
-    <button onClick={translate}>click</button>
+    {/* <button onClick={translate}>click</button> */}
 
     {word === "" ? (
         <span className="subTitle">Start by typing a word in search</span>
@@ -161,7 +180,7 @@ console.log(message)
           <div
             className="singleMean"
             style={{
-              backgroundColor: LightTheme ? "#3b5360" : "white",
+              backgroundColor: LightTheme ? "#555555" : "white",
               color: LightTheme ? "white" : "black",
             }}
           >
