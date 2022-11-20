@@ -5,6 +5,7 @@ import { useState, useEffect } from "react";
 import "./App.css";
 import { debounce } from "lodash";
 import axios from "axios";
+import logo from './mandakh.jpg'
 
 
 function App() {
@@ -143,6 +144,7 @@ console.log(def1)
         transition: "all 0.5s linear",
       }}
     >
+      <img style={{width: "20%", marginTop:"15px", marginLeft: "20px"}} src={logo}/>
      
         <div
           style={{ position: "absolute", top: 0, right: 15, paddingTop: 10 }}
