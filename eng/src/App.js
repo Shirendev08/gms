@@ -52,52 +52,47 @@ fetch('https://translo.p.rapidapi.com/api/v3/translate', options)
       }
     };
     
-    fetch(`https://mashape-community-urban-dictionary.p.rapidapi.com/define?term=${word}`, options)
+    await fetch(`https://mashape-community-urban-dictionary.p.rapidapi.com/define?term=${word}`, options)
       .then(response => response.json())
-      .then(response => setDef1(response.list[1].definition))
+      .then(response => setDef1(response))
       .catch(err => console.error(err));
   };
-  
-
+  // def1 && console.log(def1.list)
+  // def1 && [def1.list].map((x)=>{
+  //   console.log(x.author)
+  // })
+  // useEffect(()=> {
+    
+  //   if (typeof def1 != "undefined"){
+  //       def1.list.map((x)=>{
+  //       console.log(x.author)
+  //      }
+  //     )
+  //   }
+    
+  // },[def1])
   
 
   useEffect(() => {
     {word && dictionaryApi();}
   },[word]);
-  useEffect(() => {
-    {def1 && translate();}
-  },[def1]);
+  // useEffect(() => {
+  //   {def1 && translate();}
+  // },[]);
 
 
   // def1.map(x => {console.log(x.definition)})
-console.log(def1)
+// const a=Object.keys(def1.list)
+// const DisplayData=def1 && a.map((x)=>{
+//   return (
+//    <div>
+//      <h5>{def1.list[x].definition}</h5>
+//      <br/>
+//    </div>
+//   )
+// });
+// console.log(a)
 
-// console.log(message)
-
-
-// var arr = [];
-// var z=[]
-// for (var key in def1) {
-//     if (def1.hasOwnProperty(key)) {
-//         arr.push( [ key, def1[key] ] );
-//     }
-// }
-// for (var key in arr) {
-//   if (arr.hasOwnProperty(key)) {
-//       z.push( [ key, arr[key] ] );
-//   }
-// }
-// console.log(z[0][1][1].definition)
-
-
-
-
-
-
-
-
-
- 
   const darkTheme = createMuiTheme({
     palette: {
       primary: {
@@ -109,11 +104,6 @@ console.log(def1)
     const handleText = debounce((text) => {
     setWord(text);
   }, 500);
-  
-
-
-
-
 
   const PurpleSwitch = withStyles({
     switchBase: {
@@ -183,7 +173,7 @@ console.log(def1)
     {word === "" ? (
         <span className="subTitle">Start by typing a word in search</span>
       ) : ( 
-    
+       
           <div
             className="singleMean"
             style={{
@@ -191,11 +181,11 @@ console.log(def1)
               color: LightTheme ? "white" : "black",
             }}
           >
-           <b>English :</b> {def1}
+                  {/* <b>{DisplayData}</b>  */}
             <hr style={{ backgroundColor: "black", width: "100%" }} />
             
               <span>
-                <b>Монгол :</b>  {message}
+                
               </span>
             
           
