@@ -19,8 +19,27 @@ function App() {
 
 
   const translate = async () => {
-    const encodedParams = new URLSearchParams();
+//     const encodedParams = new URLSearchParams();
     
+// encodedParams.append("from", "en");
+// encodedParams.append("to", "mn");
+// encodedParams.append("text", def1);
+
+// const options = {
+// 	method: 'POST',
+// 	headers: {
+// 		'content-type': 'application/x-www-form-urlencoded',
+// 		'X-RapidAPI-Key': 'c0a2d3b7a8mshe348abd873a4e4ep17385djsn44c42053c9a5',
+// 		'X-RapidAPI-Host': 'translo.p.rapidapi.com'
+// 	},
+// 	body: encodedParams
+// };
+
+// fetch('https://translo.p.rapidapi.com/api/v3/translate', options)
+// 	.then(response => response.json())
+// 	.then(response => setMessage(response.translated_text))
+// 	.catch(err => console.error(err));
+const encodedParams = new URLSearchParams();
 encodedParams.append("from", "en");
 encodedParams.append("to", "mn");
 encodedParams.append("text", def1);
@@ -29,13 +48,13 @@ const options = {
 	method: 'POST',
 	headers: {
 		'content-type': 'application/x-www-form-urlencoded',
-		'X-RapidAPI-Key': 'c0a2d3b7a8mshe348abd873a4e4ep17385djsn44c42053c9a5',
+		'X-RapidAPI-Key': 'f1f842cab2msh0946c87ea15c3a2p17ebe0jsn645c7b089abc',
 		'X-RapidAPI-Host': 'translo.p.rapidapi.com'
 	},
 	body: encodedParams
 };
 
-fetch('https://translo.p.rapidapi.com/api/v3/translate', options)
+ fetch('https://translo.p.rapidapi.com/api/v3/translate', options)
 	.then(response => response.json())
 	.then(response => setMessage(response.translated_text))
 	.catch(err => console.error(err));
@@ -54,7 +73,7 @@ fetch('https://translo.p.rapidapi.com/api/v3/translate', options)
     
     await fetch(`https://mashape-community-urban-dictionary.p.rapidapi.com/define?term=${word}`, options)
       .then(response => response.json())
-      .then(response => setDef1(response))
+      .then(response => setDef1(response.list[1].definition))
       .catch(err => console.error(err));
   };
   // def1 && console.log(def1.list)
@@ -76,12 +95,12 @@ fetch('https://translo.p.rapidapi.com/api/v3/translate', options)
   useEffect(() => {
     {word && dictionaryApi();}
   },[word]);
-  // useEffect(() => {
-  //   {def1 && translate();}
-  // },[]);
+  useEffect(() => {
+    {word && def1 && translate();}
+  },[def1]);
 
 
-  // def1.map(x => {console.log(x.definition)})
+//   def1.map(x => {console.log(x.definition)})
 // const a=Object.keys(def1.list)
 // const DisplayData=def1 && a.map((x)=>{
 //   return (
@@ -181,11 +200,11 @@ fetch('https://translo.p.rapidapi.com/api/v3/translate', options)
               color: LightTheme ? "white" : "black",
             }}
           >
-                  {/* <b>{DisplayData}</b>  */}
+                  <b>{def1}</b> 
             <hr style={{ backgroundColor: "black", width: "100%" }} />
             
               <span>
-                
+                {message}
               </span>
             
           
