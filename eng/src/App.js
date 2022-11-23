@@ -14,50 +14,30 @@ function App() {
   const [LightTheme, setLightTheme] = useState(false);
   const [message, setMessage] = useState('');
   const [def1, setDef1] = useState([])
-  
+  const [defs, setDefs] = useState()
   const [ug, setUg] = useState('');
 
 
-  const translate = async () => {
-//     const encodedParams = new URLSearchParams();
-    
-// encodedParams.append("from", "en");
-// encodedParams.append("to", "mn");
-// encodedParams.append("text", def1);
+  const translate = async (def) => {
+    const encodedParams = new URLSearchParams();
+    encodedParams.append("from", "en");
+    encodedParams.append("to", "mn");
+    encodedParams.append("text", defs);
 
-// const options = {
-// 	method: 'POST',
-// 	headers: {
-// 		'content-type': 'application/x-www-form-urlencoded',
-// 		'X-RapidAPI-Key': 'c0a2d3b7a8mshe348abd873a4e4ep17385djsn44c42053c9a5',
-// 		'X-RapidAPI-Host': 'translo.p.rapidapi.com'
-// 	},
-// 	body: encodedParams
-// };
+    const options = {
+      method: 'POST',
+      headers: {
+        'content-type': 'application/x-www-form-urlencoded',
+        'X-RapidAPI-Key': 'f1f842cab2msh0946c87ea15c3a2p17ebe0jsn645c7b089abc',
+        'X-RapidAPI-Host': 'translo.p.rapidapi.com'
+      },
+      body: encodedParams
+    };
 
-// fetch('https://translo.p.rapidapi.com/api/v3/translate', options)
-// 	.then(response => response.json())
-// 	.then(response => setMessage(response.translated_text))
-// 	.catch(err => console.error(err));
-const encodedParams = new URLSearchParams();
-encodedParams.append("from", "en");
-encodedParams.append("to", "mn");
-encodedParams.append("text", def1);
-
-const options = {
-	method: 'POST',
-	headers: {
-		'content-type': 'application/x-www-form-urlencoded',
-		'X-RapidAPI-Key': 'f1f842cab2msh0946c87ea15c3a2p17ebe0jsn645c7b089abc',
-		'X-RapidAPI-Host': 'translo.p.rapidapi.com'
-	},
-	body: encodedParams
-};
-
- fetch('https://translo.p.rapidapi.com/api/v3/translate', options)
-	.then(response => response.json())
-	.then(response => setMessage(response.translated_text))
-	.catch(err => console.error(err));
+    fetch('https://translo.p.rapidapi.com/api/v3/translate', options)
+      .then(response => response.json())
+      .then(response => setMessage(response.translated_text))
+      .catch(err => console.error(err));
 
 }
 
@@ -73,23 +53,91 @@ const options = {
     
     await fetch(`https://mashape-community-urban-dictionary.p.rapidapi.com/define?term=${word}`, options)
       .then(response => response.json())
-      .then(response => setDef1(response.list[1].definition))
+      .then(response => setDef1(response))
       .catch(err => console.error(err));
   };
+  // console.log(def1.list)
+
+
+
+
   // def1 && console.log(def1.list)
   // def1 && [def1.list].map((x)=>{
   //   console.log(x.author)
   // })
-  // useEffect(()=> {
+
+  // const a=[0,1,2,3,4,5,6,7,8,9]
+  const defLoop = () => {
+
+    return(
+      def1.list.map((x) => (
+        <div  key={x.definition}
+        className="singleMean"
+        style={{
+          backgroundColor: LightTheme ? "#555555" : "white",
+          color: LightTheme ? "white" : "black",
+        }}
+        >
+            <p setDefs={setDefs}>
+              {x.definition}
+              {/* {console.log(defs)} */}
+              </p>
+            {/* {defLoop()} */}
+                  {/* {def1 && <b>{word}</b>} */}
+                  {/* <b>{def1}</b>  */}
+            <hr style={{ backgroundColor: "black", width: "100%" }} />
+            
+              <span>
+                {/* {message} */} 
+              </span>
+            
+          
+          </div>
+      ))
+    )
+    // // console.log("a")
+    // def1.list.map(x => {
+    //   return(
+    //     <b>{x.definition}</b>
+    //   )
+    // })
     
-  //   if (typeof def1 != "undefined"){
-  //       def1.list.map((x)=>{
-  //       console.log(x.author)
-  //      }
-  //     )
-  //   }
+    // for(let i = 0; i<10; i++){
+    //   return (<b>{def1.list[i].definition}</b>)
+
+    // }
+  }
+  useEffect(()=> {
+
+  //   {def1 && setDefs(a.map((x) => (
+  //     <b>{def1.list[x].definition}</b>
+  // )))}
     
-  // },[def1])
+    // if (typeof def1 !== "undefined"){
+    //   setDefs(def1.list.map((x) => 
+    //     <b>{x.definition}</b>
+    //   ))
+    // }
+    // else{
+    //   console.log("else", def1.list)
+
+
+    
+    
+      
+    
+    // {def1 && <b>aaa</b>}
+
+    // if(typeof def1 != undefined){
+      // for(let i = 1; i<=10; i++){
+      //   console.log(def1.list[i])
+      // console.log("a")
+      // }
+    // }
+    // console.log(def1)
+    
+  },[def1])
+
   
 
   useEffect(() => {
@@ -193,22 +241,26 @@ const options = {
         <span className="subTitle">Start by typing a word in search</span>
       ) : ( 
        
-          <div
-            className="singleMean"
-            style={{
-              backgroundColor: LightTheme ? "#555555" : "white",
-              color: LightTheme ? "white" : "black",
-            }}
-          >
-                  <b>{def1}</b> 
-            <hr style={{ backgroundColor: "black", width: "100%" }} />
+          // <div
+          //   className="singleMean"
+          //   style={{
+          //     backgroundColor: LightTheme ? "#555555" : "white",
+          //     color: LightTheme ? "white" : "black",
+          //   }}
+          // >
+          //   {def1.length != 0 ? defLoop() : console.log("null")}
+          //   {/* {defLoop()} */}
+          //         {/* {def1 && <b>{word}</b>} */}
+          //         {/* <b>{def1}</b>  */}
+          //   {/* <hr style={{ backgroundColor: "black", width: "100%" }} /> */}
             
-              <span>
-                {message}
-              </span>
-            
+          //     <span>
+          //       {/* {message} */}
+          //     </span>
           
-          </div>
+          // </div>
+          def1.length !== 0 ? defLoop() : console.log("null")
+          
         
       
       )}
