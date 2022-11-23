@@ -18,11 +18,11 @@ function App() {
   const [ug, setUg] = useState('');
 
 
-  const translate = async (def) => {
+  const translate = async () => {
     const encodedParams = new URLSearchParams();
     encodedParams.append("from", "en");
     encodedParams.append("to", "mn");
-    encodedParams.append("text", defs);
+    encodedParams.append("text", def1.list[0].definition);
 
     const options = {
       method: 'POST',
@@ -88,7 +88,7 @@ function App() {
             <hr style={{ backgroundColor: "black", width: "100%" }} />
             
               <span>
-                {/* {message} */} 
+                {message} 
               </span>
             
           
