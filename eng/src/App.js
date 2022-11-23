@@ -168,7 +168,7 @@ const options = {
           word={word}
           setMeanings={setMeanings}
           LightTheme={LightTheme}>
-      <span className="title">{word ? word : "Word Hunt"}</span>
+      <span className="title">{word ? word : "Hello"}</span>
       <div className="inputs">
       <ThemeProvider theme={darkTheme}>
           <TextField
